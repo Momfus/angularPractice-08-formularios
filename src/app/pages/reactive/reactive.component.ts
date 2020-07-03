@@ -16,6 +16,7 @@ export class ReactiveComponent implements OnInit {
 
     this.crearFormulario();
     this.cargarDataAlFormulario();
+    this.crearListeners();
 
   }
 
@@ -73,7 +74,7 @@ export class ReactiveComponent implements OnInit {
       nombre    : ['', [ Validators.required, Validators.minLength(5) ] ],
       apellido  : ['', [ Validators.required, Validators.minLength(5), this.validadores.noHerrera ] ],
       correo    : ['', [ Validators.required, Validators.pattern( '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$' )] ],
-      usuario   : ['', Validators.required, this.validadores.existeUsuario], // puede no poner el segundo argumento, dejandolo vacio entre las comas
+      usuario   : ['', , this.validadores.existeUsuario], // puede no poner el segundo argumento, dejandolo vacio entre las comas
       pass1     : ['', Validators.required ],
       pass2     : ['', Validators.required ],
       direccion : this.fb.group({
@@ -87,6 +88,22 @@ export class ReactiveComponent implements OnInit {
       // A nivel formulario asyncValidators (sino uno creado)
       validators: this.validadores.passwordsIguales('pass1', 'pass2') // Validador personal asyncrono
     });
+
+  }
+
+  crearListeners(): void {
+
+    // this.forma.valueChanges.subscribe( valor => {
+    //   console.log(valor);
+    // } );
+
+    // this.forma.statusChanges.subscribe( status => {
+    //   console.log(status);
+    // } );
+
+    // Obtener el valor de un campo en tiempo real (prueba )
+    this.forma.get('nombre').valueChanges.subscribe( console.log );
+
 
   }
 
