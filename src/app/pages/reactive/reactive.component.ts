@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-reactive',
@@ -13,6 +13,7 @@ export class ReactiveComponent implements OnInit {
   constructor( private fb: FormBuilder) {
 
     this.crearFormulario();
+    this.cargarDataAlFormulario();
 
   }
 
@@ -20,6 +21,10 @@ export class ReactiveComponent implements OnInit {
   }
 
   // getters
+  get pasatiempos(): FormArray {
+    return this.forma.get('pasatiempos') as FormArray;
+  }
+
   get nombreNovalido(): boolean {
     return ( this.forma.get('nombre').invalid && this.forma.get('nombre').touched );
   }
@@ -41,6 +46,7 @@ export class ReactiveComponent implements OnInit {
   }
 
 
+
   // Métodos
   crearFormulario(): void {
 
@@ -52,24 +58,44 @@ export class ReactiveComponent implements OnInit {
       direccion: this.fb.group({
         distrito: ['', Validators.required],
         ciudad: ['', Validators.required]
-      })
+      }),
+
+      pasatiempos: this.fb.array([
+        [], [], [], []
+      ])
 
     });
 
   }
 
+  cargarDataAlFormulario(): void {
+
+    // this.forma.setValue({ // Aca hay que setear un valor para cada dato
+    this.forma.reset({ // Aca se puede exceptuar algunos datos
+
+      nombre: 'Fulano',
+      apellido: 'De Tal',
+      correo: 'prueba@asd.com',
+      direccion: {
+        distrito: 'distrito Fulano',
+        ciudad: 'ciudad de Tal'
+      }
+
+    });
+
+  }
 
   guardar(): void {
 
     console.log( this.forma );
 
-
+    // Marcar datos inválidos
     if ( this.forma.invalid ) {
 
       return Object.values( this.forma.controls ).forEach( control => {
 
         // Si es un objeto
-        if( control instanceof FormGroup ) {
+        if ( control instanceof FormGroup ) {
 
           Object.values( control.controls ).forEach( subControl => subControl.markAsTouched() );
 
@@ -83,6 +109,10 @@ export class ReactiveComponent implements OnInit {
 
     }
 
+    // Posteo de información
+    this.forma.reset({
+      nombre: 'Sin Nombre'
+    });
 
   }
 
