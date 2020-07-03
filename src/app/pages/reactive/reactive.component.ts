@@ -60,9 +60,7 @@ export class ReactiveComponent implements OnInit {
         ciudad: ['', Validators.required]
       }),
 
-      pasatiempos: this.fb.array([
-        [], [], [], []
-      ])
+      pasatiempos: this.fb.array([])
 
     });
 
@@ -83,6 +81,20 @@ export class ReactiveComponent implements OnInit {
 
     });
 
+    // Una forma de agregar un conjunto de valores al arreglo de pasatiempos
+    // ['Comer', 'Videojuegos'].forEach( valor => this.pasatiempos.push( this.fb.control(valor) ) )
+
+  }
+
+  agregarPasatiempo(): void {
+
+    // Agregar elemento con validación
+    this.pasatiempos.push( this.fb.control('', Validators.required) );
+
+  }
+
+  borrrarPasatiempo( i: number): void {
+    this.pasatiempos.removeAt( i );
   }
 
   guardar(): void {

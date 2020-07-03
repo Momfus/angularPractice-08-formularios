@@ -122,7 +122,8 @@
                       [formControlName]="i"> <!-- De esta forma relaciona según la posición -->
             </td>
             <td>
-              <button class="btn btn-danger">
+              <button class="btn btn-danger"
+                      (click)="borrrarPasatiempo( i )">
                 Borrar
               </button>
             </td>
@@ -133,6 +134,7 @@
 
       <!-- Agregar pasatiempo -->
       <button class="btn btn-primary mt-3 mb-5 btn-block"
+              (click)="agregarPasatiempo()"
               type="button"> <!-- De esta manera evita el uso del submit -->
         + Agregar
       </button>
