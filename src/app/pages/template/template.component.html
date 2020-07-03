@@ -1,30 +1,54 @@
 <h4>Formularios <small> Template </small></h4>
 <hr>
-<form autocomplete="off" (ngSubmit)="guardar()" >
+<form autocomplete="off" (ngSubmit)="guardar( forma )" #forma="ngForm"> <!-- Referencia usando ngForm -->
 
   <div>
 
+    <!-- Nombre -->
     <div class="form-group row">
       <label class="col-2 col-form-label">Nombre</label>
       <div class="col-8">
 
-        <input class="form-control"
-               type="text"
-               name="nombre"
-               ngModel
-               placeholder="Nombre"
-               required
-               minlength="5">
+        <input  class="form-control"
+                type="text"
+                name="nombre"
+                placeholder="Nombre"
+                [class.is-invalid]="nombre.invalid && nombre.touched"
+                [ngModel]="usuario.nombre"
+                required
+                minlength="5"
+                #nombre="ngModel">
+
+        <!-- mensaje de error -->
+        <small  *ngIf="nombre.invalid && nombre.touched"
+                class="form-text text-danger">
+          Ingrese 5 letras
+        </small>
+
       </div>
     </div>
 
+    <!--Apellido -->
     <div class="form-group row">
       <label class="col-2 col-form-label">Apellido</label>
       <div class="col-8">
 
         <input class="form-control"
                type="text"
-               placeholder="Apellido">
+               name="apellido"
+               placeholder="Apellido"
+               [class.is-invalid]="apellido.invalid && apellido.touched"
+               [ngModel]="usuario.apellido"
+               required
+               minlength="5"
+               #apellido="ngModel">
+
+        <!-- mensaje de error -->
+        <small  *ngIf="apellido.invalid && apellido.touched"
+                class="form-text text-danger">
+          Ingrese 5 letras
+        </small>
+
       </div>
     </div>
 
@@ -34,9 +58,24 @@
     <label class="col-2 col-form-label">Correo</label>
     <div class="col-8">
 
+      <!-- Mail -->
+      <!-- Expresion regular del mail válido -->
       <input class="form-control"
              type="email"
-             placeholder="Correo electrónico">
+             [class.is-invalid]="correo.invalid && correo.touched"
+             placeholder="Correo electrónico"
+             ngModel
+             name="correo"
+             required
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+             #correo="ngModel">
+
+      <!-- mensaje de error -->
+      <small  *ngIf="correo.invalid && correo.touched"
+              class="form-text text-danger">
+        El correo es obligatorio
+      </small>
+
     </div>
   </div>
 
