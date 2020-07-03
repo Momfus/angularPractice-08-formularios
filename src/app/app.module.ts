@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { FormsModule } from '@angular/forms'; // Evita el refresh en formularios y manejado por angular
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Evita el refresh en formularios y manejado por angular
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -20,7 +20,8 @@ import { ReactiveComponent } from './pages/reactive/reactive.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    FormsModule, // Si se usa por template
+    ReactiveFormsModule, // si se usa reactivos
     HttpClientModule
   ],
   providers: [],

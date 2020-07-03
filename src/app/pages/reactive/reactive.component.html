@@ -1,46 +1,108 @@
 <h4>Formularios <small> Reactivos </small></h4>
 <hr>
-<form autocomplete="off">
+<form autocomplete="off" [formGroup]="forma" (ngSubmit)="guardar()">
 
   <div>
 
+    <!-- Nombre -->
     <div class="form-group row">
       <label class="col-2 col-form-label">Nombre</label>
-      <div class="col-8">
+      <div class="col">
 
         <input class="form-control"
                type="text"
-               placeholder="Nombre">
+               placeholder="Nombre"
+               formControlName="nombre"
+               [class.is-invalid]="nombreNovalido">
+
+      <!-- mensaje de error -->
+      <small  *ngIf="nombreNovalido"
+              class="form-text text-danger">
+        Ingrese 5 letras
+      </small>
+
       </div>
     </div>
 
+
+    <!-- Apellido -->
     <div class="form-group row">
       <label class="col-2 col-form-label">Apellido</label>
-      <div class="col-8">
+      <div class="col">
 
         <input class="form-control"
                type="text"
-               placeholder="Apellido">
+               placeholder="Apellido"
+               formControlName="apellido"
+               [class.is-invalid]="apellidoNovalido">
+
+        <!-- mensaje de error -->
+        <small  *ngIf="apellidoNovalido"
+                class="form-text text-danger">
+          Ingrese 5 letras
+        </small>
+
       </div>
     </div>
 
   </div>
 
+  <!-- Correo -->
   <div class="form-group row">
     <label class="col-2 col-form-label">Correo</label>
-    <div class="col-8">
+    <div class="col">
 
       <input class="form-control"
              type="email"
-             placeholder="Correo electrónico">
+             placeholder="Correo electrónico"
+             formControlName="correo"
+             [class.is-invalid]="correoNovalido">
+
+      <!-- mensaje de error -->
+      <small  *ngIf="correoNovalido"
+              class="form-text text-danger">
+        Ingrese un correo válido
+      </small>
+
+
     </div>
   </div>
 
 
+  <!-- Direccion -->
+  <div class="form-group row" formGroupName="direccion">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="form-row col">
 
+      <!-- Distrito -->
+      <div class="col">
+
+        <input  type="text"
+                class="form-control"
+                placeholder="Distrito"
+                formControlName="distrito"
+                [class.is-invalid]="distritoNovalido">
+
+      </div>
+
+      <!-- Ciudad -->
+      <div class="col">
+
+        <input  type="text"
+                class="form-control"
+                placeholder="Ciudad"
+                formControlName="ciudad"
+                [class.is-invalid]="ciudadNovalido">
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Submit button -->
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
-    <div class="input-group col-md-8">
+    <div class="input-group col">
       <button type="submit" class="btn btn-outline-primary btn-block">
         Guardar
       </button>
@@ -48,3 +110,16 @@
   </div>
 
 </form>
+
+
+<!-- Para controlar el estado del formulario (pruebas) -->
+<hr>
+<pre>
+  Estado del formulario: {{ forma.valid }}
+  <br>
+  Status: {{ forma.status }}
+</pre>
+
+<pre>
+  {{ forma.value | json }}
+</pre>
