@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { ValidadoresService } from '../../services/validadores.service';
 
 @Component({
   selector: 'app-reactive',
@@ -10,7 +11,8 @@ export class ReactiveComponent implements OnInit {
 
   forma: FormGroup;
 
-  constructor( private fb: FormBuilder) {
+  constructor(  private fb: FormBuilder,
+                private validadores: ValidadoresService) {
 
     this.crearFormulario();
     this.cargarDataAlFormulario();
@@ -37,6 +39,10 @@ export class ReactiveComponent implements OnInit {
     return ( this.forma.get('correo').invalid && this.forma.get('correo').touched );
   }
 
+  get usuarioNoValido(): boolean {
+    return ( this.forma.get('usuario').invalid && this.forma.get('usuario').touched );
+  }
+
   get distritoNovalido(): boolean {
     return ( this.forma.get('direccion.distrito').invalid && this.forma.get('direccion.distrito').touched );
   }
@@ -45,6 +51,18 @@ export class ReactiveComponent implements OnInit {
     return ( this.forma.get('direccion.ciudad').invalid && this.forma.get('direccion.ciudad').touched );
   }
 
+  get pass1NoValido(): boolean {
+    return ( this.forma.get('pass1').invalid && this.forma.get('pass1').touched );
+  }
+
+  get pass2NoValido(): boolean {
+
+    const pass1 = this.forma.get('pass1').value;
+    const pass2 = this.forma.get('pass2').value;
+
+    return ( pass1 === pass2 ) ? false : true;
+
+  }
 
 
   // Métodos
@@ -52,16 +70,22 @@ export class ReactiveComponent implements OnInit {
 
     this.forma = this.fb.group({
 
-      nombre  : ['', [ Validators.required, Validators.minLength(5) ] ],
-      apellido: ['', [ Validators.required, Validators.minLength(5) ] ],
-      correo  : ['', [ Validators.required, Validators.pattern( '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$' )] ],
-      direccion: this.fb.group({
+      nombre    : ['', [ Validators.required, Validators.minLength(5) ] ],
+      apellido  : ['', [ Validators.required, Validators.minLength(5), this.validadores.noHerrera ] ],
+      correo    : ['', [ Validators.required, Validators.pattern( '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$' )] ],
+      usuario   : ['', Validators.required, this.validadores.existeUsuario], // puede no poner el segundo argumento, dejandolo vacio entre las comas
+      pass1     : ['', Validators.required ],
+      pass2     : ['', Validators.required ],
+      direccion : this.fb.group({
         distrito: ['', Validators.required],
         ciudad: ['', Validators.required]
       }),
 
       pasatiempos: this.fb.array([])
 
+    }, {
+      // A nivel formulario asyncValidators (sino uno creado)
+      validators: this.validadores.passwordsIguales('pass1', 'pass2') // Validador personal asyncrono
     });
 
   }
@@ -77,7 +101,10 @@ export class ReactiveComponent implements OnInit {
       direccion: {
         distrito: 'distrito Fulano',
         ciudad: 'ciudad de Tal'
-      }
+      },
+      // Estos de abajo son temporales, obviamente no deberia estar en una aplicación
+      pass1: '123',
+      pass2: '123'
 
     });
 

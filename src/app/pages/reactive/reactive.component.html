@@ -68,10 +68,58 @@
     </div>
   </div>
 
+  <!-- Usuario -->
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Usuario</label>
+    <div class="col">
 
-  <!-- Direccion -->
+      <input class="form-control"
+              type="email"
+              placeholder="Nombre de Usuario"
+              formControlName="usuario"
+              [class.is-invalid]="usuarioNoValido">
+
+      <!-- mensaje de error -->
+      <small  *ngIf="usuarioNoValido"
+              class="form-text text-danger">
+        IEse nombre de usuario ya fue tomado
+      </small>
+
+
+    </div>
+  </div>
+
+  <!-- Contraseña -->
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Contraseña</label>
+    <div class="form-row col">
+
+      <input  class="form-control"
+              type="password"
+              placeholder="Contraseña"
+              formControlName="pass1"
+              [class.is-invalid]="pass1NoValido">
+
+    </div>
+  </div>
+
+    <!-- Repetir contraseña-->
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Repita Contraseña</label>
+      <div class="form-row col">
+
+        <input  class="form-control"
+                type="password"
+                placeholder="Repita Contraseña"
+                formControlName="pass2"
+                [class.is-invalid]="pass2NoValido">
+
+      </div>
+    </div>
+
+  <!-- Dirección -->
   <div class="form-group row" formGroupName="direccion">
-    <label class="col-2 col-form-label">Correo</label>
+    <label class="col-2 col-form-label">Dirección</label>
     <div class="form-row col">
 
       <!-- Distrito -->
