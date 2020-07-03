@@ -117,7 +117,7 @@
                 value="M"
                 [class.is-invalid]="genero.invalid && genero.touched"
                 required
-                ngModel
+                [ngModel]="usuario.genero"
                 #genero="ngModel"
                 >
 
@@ -134,7 +134,7 @@
                 value="F"
                 [class.is-invalid]="genero.invalid && genero.touched"
                 required
-                ngModel
+                [ngModel]="usuario.genero"
                 #genero="ngModel"
                 >
 
