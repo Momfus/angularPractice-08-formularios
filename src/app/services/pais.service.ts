@@ -20,12 +20,12 @@ export class PaisService {
                 // Obtengo los campos que me intersan de cada objetos del endpoint recibido
                 map( (res: any[]) => { // este map es el de rxjs del observador
                   return res.map( pais => { // este map es de los arreglos (no confundirlo con el anterior)
-                    return {
+                    return { // puedo sacar las llaves con solo el objeto que devuelve al ser solo un elemento (idem con anterior return)
 
                       nombre: pais.name,
                       codigo: pais.alpha3Code
 
-                    }
+                    };
                   });
                 })
               );

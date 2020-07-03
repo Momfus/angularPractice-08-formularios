@@ -64,7 +64,7 @@
              type="email"
              [class.is-invalid]="correo.invalid && correo.touched"
              placeholder="Correo electrónico"
-             ngModel
+             [ngModel]="usuario.correo"
              name="correo"
              required
              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
@@ -80,7 +80,72 @@
   </div>
 
 
+  <!-- Pais -->
+  <div class="form-group row">
+    <label class="col-2 col-form-label">País</label>
+    <div class="col-8">
 
+      <select class="form-control"
+              name="pais"
+              [class.is-invalid]="pais.invalid && pais.touched"
+              [disabled]="paises.length === 0"
+              [ngModel]="usuario.pais"
+              required
+              #pais="ngModel">
+        <option *ngFor="let pais of paises"
+                [value]="pais.codigo">
+
+          {{ pais.nombre }}
+
+        </option>
+      </select>
+
+    </div>
+  </div>
+
+  <!-- Género -->
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Género</label>
+    <div class="col-8">
+
+      <!-- Masculino -->
+      <div class="form-check form-check-inline">
+
+        <input  class="form-check-input"
+                type="radio"
+                name="genero"
+                value="M"
+                [class.is-invalid]="genero.invalid && genero.touched"
+                required
+                ngModel
+                #genero="ngModel"
+                >
+
+        <label class="form-check-label">Masculino</label>
+
+      </div>
+
+      <!-- Femenino -->
+      <div class="form-check form-check-inline">
+
+        <input  class="form-check-input"
+                type="radio"
+                name="genero"
+                value="F"
+                [class.is-invalid]="genero.invalid && genero.touched"
+                required
+                ngModel
+                #genero="ngModel"
+                >
+
+        <label class="form-check-label">Femenino</label>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Submit button -->
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-8">
